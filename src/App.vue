@@ -1,30 +1,25 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import ProductCard from './components/ProductCard.vue';
+const listProducts = [{
+  id: 1,
+  image: "",
+  name: "product 1",
+  promotion: 20,
+  price: 40000,
+  rate: 5,
+  tag: ["123", "123", "123"]
+}, {
+  id: 2,
+  image: "",
+  name: "product 2",
+  promotion: 40,
+  price: 40000,
+  rate: 5,
+  tag: ["123", "123", "123"]
+}]
 </script>
-
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div v-for="item in listProducts">
+    <ProductCard msg="Vite + Vue" :item="item" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>

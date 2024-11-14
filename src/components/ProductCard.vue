@@ -1,64 +1,55 @@
-<!-- ProductCard.vue -->
+<script setup lang="ts">
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
+
+defineProps({
+  item: {
+    type: Object,
+    required: true
+  }
+});
+</script>
+
 <template>
   <div class="product-card">
     <div class="product-image">
-      <!-- Hiển thị ảnh sản phẩm -->
-      <img src="https://via.placeholder.com/150" alt="Product Image">
+      <swiper :slides-per-view="1" :space-between="10">
+        <swiper-slide v-for="image in item.images" :key="image.id">
+          <img :src="image.url" :alt="item.name" />
+        </swiper-slide>
+      </swiper>
     </div>
     <div class="product-info">
-      <h3 class="product-name">{{ item.name }}</h3>
-      <div class="product-price">
-        <span class="price">{{ formatPrice(item.price) }}</span>
-        <span class="promotion" v-if="item.promotion > 0">-{{ item.promotion }}%</span>
-      </div>
-      <div class="product-rating">
-        <div class="stars">
-          <!-- Hiển thị số sao đánh giá -->
-          <i class="fas fa-star" v-for="i in item.rate" :key="i"></i>
-        </div>
-        <span class="reviews">{{ item.rate }} reviews</span>
-      </div>
       <div class="product-tags">
-        <span class="tag" v-for="tag in item.tag" :key="tag">{{ tag }}</span>
+        <img v-for="tag in item.tag" :key="tag.id" :src="tag.url" :alt="tag.name" />
       </div>
-      <button class="add-to-cart">Add to Cart</button>
+      <h3 class="product-name">{{ item.name }}</h3>
+      <div class="product-rating">
+        <span v-for="n in item.rate" :key="n" class="rating-star">&#9733;</span>
+      </div>
+      <div class="product-price">
+        <span class="price">{{ item.price.toLocaleString() }} VND</span>
+        <span class="original-price">{{ item.original_price.toLocaleString() }} VND</span>
+        <span class="discount">{{ item.discount }}</span>
+      </div>
+      <div class="product-delivery">
+        <span>Delivery: {{ item.time_delivery }}</span>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { defineProps } from 'vue'
-
-interface ProductItem {
-  id: number
-  name: string
-  promotion: number
-  price: number
-  rate: number
-  tag: string[]
-}
-
-defineProps<{
-  item: ProductItem
-}>()
-
-const formatPrice = (price: number) => {
-  return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-}
-</script>
-
 <style scoped>
 .product-card {
   display: flex;
+  flex-direction: column;
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .product-image {
-  flex-basis: 150px;
-  overflow: hidden;
+  height: 300px;
 }
 
 .product-image img {
@@ -68,14 +59,26 @@ const formatPrice = (price: number) => {
 }
 
 .product-info {
-  flex-grow: 1;
   padding: 16px;
 }
 
-.product-name {
-  font-size: 18px;
-  font-weight: bold;
+.product-tags {
+  display: flex;
   margin-bottom: 8px;
+}
+
+.product-tags img {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.product-name {
+  margin-top: 0;
+}
+
+.product-rating .rating-star {
+  color: #ffc107;
 }
 
 .product-price {
@@ -84,59 +87,26 @@ const formatPrice = (price: number) => {
   margin-bottom: 8px;
 }
 
-.price {
-  font-size: 16px;
+.product-price .price {
+  font-size: 18px;
   font-weight: bold;
   margin-right: 8px;
 }
 
-.promotion {
-  background-color: #f44336;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.product-rating {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.stars {
-  color: #ffa500;
+.product-price .original-price {
+  text-decoration: line-through;
+  color: #888;
   margin-right: 8px;
 }
 
-.reviews {
-  font-size: 14px;
-  color: #666;
-}
-
-.product-tags {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.tag {
-  background-color: #f5f5f5;
-  color: #333;
+.product-price .discount {
+  background-color: #ff6b6b;
+  color: #fff;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 14px;
-  margin-right: 8px;
-  margin-bottom: 8px;
 }
 
-.add-to-cart {
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+.product-delivery {
+  color: #888;
 }
 </style>

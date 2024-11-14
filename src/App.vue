@@ -1,26 +1,35 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import ProductCard from './components/ProductCard.vue';
-const listProducts = [{
-  id: 1,
-  image: "",
-  name: "product 1",
-  promotion: 20,
-  price: 40000,
-  rate: 5,
-  tag: ["123", "123", "123"]
-}, {
-  id: 2,
-  image: "",
-  name: "product 2",
-  promotion: 40,
-  price: 40000,
-  rate: 5,
-  tag: ["123", "123", "123"],
-  
-}]
+import dataProduct from './dataSample.js';
 </script>
+
 <template>
-  <div v-for="item in listProducts">
-    <ProductCard msg="Vite + Vue" :item="item" />
+  <div class="app-container">
+    <div class="product-grid">
+      <div class="product-item" v-for="item in dataProduct" :key="item.id">
+        <ProductCard :item="item" />
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100vw;
+}
+
+.product-grid {
+  display: flex;
+  width: 100%;
+}
+
+.product-item {
+  display: flex;
+  justify-content: center;
+  width: 25%;
+}
+</style>

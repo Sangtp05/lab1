@@ -15,7 +15,8 @@ const listProducts = [{
   promotion: 40,
   price: 40000,
   rate: 5,
-  tag: ["123", "123", "123"]
+  tag: ["123", "123", "123"],
+  
 }]
 </script>
 <template>

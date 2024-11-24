@@ -1,112 +1,72 @@
-<script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/css';
-
-defineProps({
-  item: {
-    type: Object,
-    required: true
-  }
-});
-</script>
-
 <template>
-  <div class="product-card">
-    <div class="product-image">
-      <swiper :slides-per-view="1" :space-between="10">
-        <swiper-slide v-for="image in item.images" :key="image.id">
-          <img :src="image.url" :alt="item.name" />
-        </swiper-slide>
-      </swiper>
+    <div class="profile-card">
+      <img :src="imageUrl" alt="Profile Picture" class="profile-img" />
+      <h2>{{ name }}</h2>
+      <p>{{ description }}</p>
+  
+      <h3>Sở Thích:</h3>
+      <ul>
+        <li v-for="hobby in hobbies" :key="hobby">{{ hobby }}</li>
+      </ul>
+  
+      <button @click="updateInfo" class="edit-btn">Edit</button>
     </div>
-    <div class="product-info">
-      <div class="product-tags">
-        <img v-for="tag in item.tag" :key="tag.id" :src="tag.url" :alt="tag.name" />
-      </div>
-      <h3 class="product-name">{{ item.name }}</h3>
-      <div class="product-rating">
-        <span v-for="n in item.rate" :key="n" class="rating-star">&#9733;</span>
-      </div>
-      <div class="product-price">
-        <span class="price">{{ item.price.toLocaleString() }} VND</span>
-        <span class="original-price">{{ item.original_price.toLocaleString() }} VND</span>
-        <span class="discount">{{ item.discount }}</span>
-      </div>
-      <div class="product-delivery">
-        <span>Delivery: {{ item.time_delivery }}</span>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.product-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.product-image {
-  height: 300px;
-}
-
-.product-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.product-info {
-  padding: 16px;
-}
-
-.product-tags {
-  display: flex;
-  margin-bottom: 8px;
-}
-
-.product-tags img {
-  width: 32px;
-  height: 32px;
-  margin-right: 8px;
-}
-
-.product-name {
-  margin-top: 0;
-}
-
-.product-rating .rating-star {
-  color: #ffc107;
-}
-
-.product-price {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.product-price .price {
-  font-size: 18px;
-  font-weight: bold;
-  margin-right: 8px;
-}
-
-.product-price .original-price {
-  text-decoration: line-through;
-  color: #888;
-  margin-right: 8px;
-}
-
-.product-price .discount {
-  background-color: #ff6b6b;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-.product-delivery {
-  color: #888;
-}
-</style>
+  </template>
+  
+  <script>
+  export default {
+    name: "HelloWorld",
+    props: {
+      imageUrl: {
+        type: String,
+        default: "https://cdn.tuoitre.vn/thumb_w/730/471584752817336320/2024/10/20/37655133-1729441009310281039725.jpg"
+      },
+      name: {
+        type: String,
+        default: "Trần Phú Sang"
+      },
+      description: {
+        type: String,
+        default: "Giới thiệu bản thân"
+      },
+      hobbies: {
+        type: Array,
+        default: () => ["Đọc sách", "Chơi thể thao", "Du lịch"]
+      }
+    },
+    methods: {
+      updateInfo() {
+        // Logic cập nhật thông tin
+        console.log("Updating info...");
+      }
+    }
+  };
+  </script>
+  
+  <style scoped>
+  .profile-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+    font-family: Arial, sans-serif;
+    color: #070000;
+  }
+  .profile-img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .edit-btn {
+    background-color: #6c63ff;
+    color: #010000;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  .edit-btn:hover {
+    background-color: #5a52d6;
+  }
+  </style>
